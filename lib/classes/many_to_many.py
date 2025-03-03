@@ -1,5 +1,8 @@
 class Article:
     def __init__(self, author, magazine, title):
+        if hasattr(self, 'author'):
+            raise AttributeError("Cannot modify the author after initialisation")
+        
         self.author = author(author)
         self.magazine = magazine(magazine)
         self.title = str(title)
