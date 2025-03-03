@@ -12,7 +12,7 @@ class Article:
         self.title = str(title)
         Article.articles.append(self)
 
-    def articletitle(self):
+    def title(self):
         return {self.title} 
     
     def author(self):
@@ -40,14 +40,15 @@ class Author:
         
         self.name = str(name)
     
-    def fullname(self):
-        return print(f" The author is {self.name} ") 
+    def name(self):
+        return self.name 
 
     def articles(self):
         return [article for article in Article.articles if article.magazine == self]
 
     def magazines(self):
-        pass
+        return list(set(article.magazine for article in self.articles()))
+
 
     def add_article(self, magazine, title):
         pass
@@ -60,18 +61,28 @@ class Magazine:
         self.name = str(name)
         self.category = str(category)
     
-    def magazinename(self):
-        return print(f" The magazine title is {self.name} ")
+    def name(self):
+        return self.name 
     
-    def magazinecategory(self):
-        return print(f" The magazine category is {self.category} "
-)
+    def name(self, value):
+        if not isinstance(value, str) or not (2< len(value)<=16):
+            raise ValueError("the magazine name should be a string between 2 and 16 charaters")
+        self.name = value
+        
+    def category(self):
+        return self.category
+
+    def category(self, value):
+        if not isinstance(value, str) or  len(value)==0:
+            raise ValueError("tthe category must be a non-empty string")
+        self.name = value
 
     def articles(self):
-        pass
+        return [article for article in Article.articles if article.magazine == self]
+
 
     def contributors(self):
-        pass
+        return list(set(article.author for article in self.articles()))
 
     def article_titles(self):
         pass
