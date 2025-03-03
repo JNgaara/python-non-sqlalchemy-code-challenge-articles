@@ -6,7 +6,10 @@ class Article:
         
 class Author:
     def __init__(self, name):
-        self.name = name
+        self.name = str(name)
+    
+    def fullname(self):
+        return f""
 
     def articles(self):
         pass
@@ -22,8 +25,8 @@ class Author:
 
 class Magazine:
     def __init__(self, name, category):
-        self.name = name
-        self.category = category
+        self.name = str(name)
+        self.category = str(category)
 
     def articles(self):
         pass
