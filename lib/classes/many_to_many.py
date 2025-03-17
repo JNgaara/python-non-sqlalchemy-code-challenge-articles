@@ -14,7 +14,16 @@ class Article:
 
     def title(self):
         return {self.title} 
-    
+   
+    def title(self, value):
+        if not isinstance(value, str):
+            raise ValueError("Title must be of type str.")
+        if len(value) < 5 or len(value) > 50:
+            raise ValueError("Title must be between 5 and 50 characters, inclusive.")
+        if hasattr(self, '_title'):
+            raise AttributeError("Title cannot be changed after instantiation.")
+        self._title = value
+
     def author(self):
         return self.author
     
@@ -51,10 +60,16 @@ class Author:
 
 
     def add_article(self, magazine, title):
-        pass
+        
+        new_article = Article(self, magazine, title)
+        self._articles.append(new_article)
+        return new_article
 
     def topic_areas(self):
-        pass
+        
+        if not self._articles:
+            return None
+        return list(set(article.magazine.category for article in self._articles))
 
 class Magazine:
     def __init__(self, name, category):
@@ -85,7 +100,21 @@ class Magazine:
         return list(set(article.author for article in self.articles()))
 
     def article_titles(self):
-        pass
+        if not self._articles:
+            return None
+        # Return a list of titles of all articles in the magazine
+        return [article.title for article in self._articles]
 
     def contributing_authors(self):
-        pass
+        if not self._articles:
+            return None
+        # Count how many articles each author has written for the magazine
+        author_counts = {}
+        for article in self._articles:
+            author = article.author
+            if author in author_counts:
+                author_counts[author] += 1
+            else:
+                author_counts[author] = 1
+        # Return authors who have written more than 2 articles
+        return [author for author, count in author_counts.items() if count > 2]
